@@ -1,0 +1,4 @@
+title=Funnyboat
+author=zielmicha
+api=1
+orientation=landscape
