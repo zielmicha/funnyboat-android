@@ -31,7 +31,7 @@ class Health (pygame.sprite.Sprite):
 
         self.hearts_left = 5
         self.hearts_dying = 0
-        self.hearts_deathcounters = ([0,0,0,0,0])
+        self.hearts_deathcounters = ([0, 0, 0, 0, 0])
 
 
         self.update()
@@ -46,14 +46,14 @@ class Health (pygame.sprite.Sprite):
                 self.image.blit(Health.heart, rect)
             else:
                 self.image.blit(Health.heart_empty, rect)
-            	if i < (self.hearts_left + self.hearts_dying):
-            	   rect.top -= self.hearts_deathcounters[i]
-#       	   	   if self.usealpha:
-		   Health.heart_broken.set_alpha(255 - self.hearts_deathcounters[i]*10)
-		   self.image.blit(Health.heart_broken, rect)
-		   self.hearts_deathcounters[i] += 1
-		   if self.hearts_deathcounters[i] == 25:
-		      self.hearts_dying -= 1
+                if i < (self.hearts_left + self.hearts_dying):
+                   rect.top -= self.hearts_deathcounters[i]
+            #       	   	   if self.usealpha:
+            Health.heart_broken.set_alpha(255 - self.hearts_deathcounters[i]*10)
+            self.image.blit(Health.heart_broken, rect)
+            self.hearts_deathcounters[i] += 1
+            if self.hearts_deathcounters[i] == 25:
+              self.hearts_dying -= 1
 
 
     def damage(self):
@@ -62,7 +62,7 @@ class Health (pygame.sprite.Sprite):
             self.hearts_dying += 1
         
         if util.android:
-            util.android.vibrate(0.5)
+            util.android.vibrate(0.3)
 
         self.update()
 

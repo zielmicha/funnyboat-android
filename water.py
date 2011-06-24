@@ -35,13 +35,28 @@ class Water(pygame.sprite.Sprite):
         self.update()
     
     def update(self):
+        _sin = math.sin
+        _t = self.t
+        _amplitude = self.amplitude
+        _baseheight = self.baseheight
+        _SCREEN_HEIGHT = SCREEN_HEIGHT
+        _water_levels = self.water_levels
+        _draw_line = pygame.draw.line
+        _image = self.image
+        
         self.image.fill((255,0,255))
         xmul = 2.0 * math.pi / self.wavelength / float(SCREEN_WIDTH)
         tmul = math.pi * 2.0 / float(FPS) * self.speed
-        for x in range(self.rect.width):
-            h = SCREEN_HEIGHT - (math.sin(x * xmul + self.t * tmul) * self.amplitude + self.baseheight)
-            self.water_levels[x] = h
-            pygame.draw.line(self.image, (20, 60, 180), (x, h), (x, SCREEN_HEIGHT))
+        
+        for x in xrange(0, self.rect.width, 5):
+            h = _SCREEN_HEIGHT - (_sin(x * xmul + _t * tmul) * _amplitude + _baseheight)
+            _water_levels[x] = h
+            _water_levels[x+1] = h
+            _water_levels[x+2] = h
+            _water_levels[x+3] = h
+            _water_levels[x+4] = h
+            #_draw_line(_image, (20, 60, 180), (x, h), (x, _SCREEN_HEIGHT))
+            pygame.draw.rect(_image, (20, 60, 180), (x, h, 5, _SCREEN_HEIGHT-h))
 
         if self.target_amplitude != self.amplitude:
             self.amplitude = 0.99 * self.amplitude + 0.01 * self.target_amplitude

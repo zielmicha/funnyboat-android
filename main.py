@@ -4,8 +4,6 @@ import pygame
 try:
     import android
     import sys
-    sys.stdout = sys.stderr = open('log', 'w', 1)
-    android.map_key(android.KEYCODE_BACK, pygame.K_ESCAPE)
     class surfarray:
         def array_alpha(self, img): pass
     pygame.surfarray = surfarray()

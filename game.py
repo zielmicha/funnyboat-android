@@ -27,6 +27,8 @@ import util
 
 from locals import *
 
+cheat_seq = [K_z, K_i, K_e, K_l, K_m, K_i, K_c, K_h, K_a]
+
 class Game:
     def __init__(self, screen, usealpha = True, noparticles = False, endless = False):
         self.screen = screen
@@ -56,6 +58,8 @@ class Game:
         self.sky = util.load_image("taivas")
         self.sky = pygame.transform.scale(self.sky, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
+        self.pause_icon = util.load_image("pause")
+        
         self.cannonballs = []
         self.cannonball_sprites = pygame.sprite.Group()
 
@@ -83,7 +87,8 @@ class Game:
         self.powerup_sprites = pygame.sprite.Group()
 
         self.level = Level(endless)
-
+        self.cheat_current = 0
+        
         self.lastshot = MIN_FIRE_DELAY + 1
 
         self.gameover = False
@@ -206,20 +211,24 @@ class Game:
     
     def translate_mouse_event(self, event):
      if event.type in (MOUSEBUTTONDOWN, ):
-       rx = event.pos[0] / float(SCREEN_WIDTH)
-       ry = event.pos[1] / float(SCREEN_HEIGHT)
-       if rx < 0.0:
-          key = K_LEFT
-       elif rx > 1.0:
-          key = K_RIGHT
-       elif ry > 0.5:
-          key = K_SPACE
+       if event.pos[0] > SCREEN_WIDTH - 32 and event.pos[1] < 32:
+          key = K_p
        else:
-          key = K_UP
+          rx = event.pos[0] / float(SCREEN_WIDTH)
+          ry = event.pos[1] / float(SCREEN_HEIGHT)
+          if rx < 0.0:
+             key = K_LEFT
+          elif rx > 1.0:
+             key = K_RIGHT
+          elif ry > 0.5:
+             key = K_SPACE
+          else:
+             key = K_UP
        event = pygame.event.Event(KEYUP if event.type == MOUSEBUTTONUP else KEYDOWN, key=key)
      
-     self.player.move_left(False)
-     self.player.move_right(False)
+     if util.android:
+        self.player.move_left(False)
+        self.player.move_right(False)
      return event
     
     def handle_events(self):
@@ -296,6 +305,15 @@ class Game:
                     print "Screenshot saved as sshot.tga"
                 elif event.key == K_p:
                     self.set_pause()
+                elif event.key == cheat_seq[self.cheat_current]:
+                    self.cheat_current += 1
+                    print self.cheat_current
+                    if len(cheat_seq) == self.cheat_current:
+                        print 'Cheater!'
+                        self.cheat_current = 0
+                        self.level.phase = 5
+                        self.level.t = 0
+                        self.spawn_enemies()
             elif event.type == KEYUP:
                 if event.key == K_LEFT:
                     self.player.move_left(False)
@@ -315,6 +333,7 @@ class Game:
 
     def draw(self):
         self.screen.blit(self.sky, self.screen.get_rect())
+        self.screen.blit(self.pause_icon, (SCREEN_WIDTH - 32, 0))
         self.health_sprite.draw(self.screen)
         self.score_sprite.draw(self.screen)
         self.player_sprite.draw(self.screen)

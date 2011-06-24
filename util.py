@@ -28,6 +28,10 @@ def android_check_pause():
        if android.check_pause():
             android.wait_for_resume()
 
+def vibrate():
+	if android:
+		android.vibrate(0.3)
+
 def get_tiling():
 			x, y, z = android.accelerometer_reading()
 			xrel = y/10

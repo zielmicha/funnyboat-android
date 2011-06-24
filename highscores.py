@@ -152,7 +152,7 @@ class Highscores:
                                 if len(self.scores[self.input_score][0]) < 32:
                                     self.scores[self.input_score][0] += event.unicode
                     else:
-                        if event.type == KEYDOWN or event.type == QUIT or event.type == JOYBUTTONDOWN:
+                        if event.type == KEYDOWN or event.type == QUIT or event.type == JOYBUTTONDOWN or event.type == MOUSEBUTTONDOWN:
                             self.done = True
                             nextframe = True
 

@@ -20,7 +20,7 @@ class Menu:
 
         self.sky = util.load_image("taivas")
 
-        self.water = Water(True) #Water.global_water
+        self.water = Water.global_water
         self.water_sprite = pygame.sprite.Group()
         self.water_sprite.add(self.water)
 
@@ -59,7 +59,7 @@ class Menu:
             rect.top = 0
             self.screen.blit(self.logo, rect)
 
-            image = self.url_font.render("http://funnyboat.sourceforge.net/", True, (0,0,0))
+            image = self.url_font.render("https://github.com/zielmicha/funnyboat-android", True, (0,0,0))
             bottom = rect.bottom
             rect = image.get_rect()
             rect.midbottom = self.screen.get_rect().midbottom
