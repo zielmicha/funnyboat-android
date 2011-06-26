@@ -18,7 +18,7 @@ class Water(pygame.sprite.Sprite):
             Water.raster_image = pygame.transform.scale(util.load_image("rasteri"), (SCREEN_WIDTH, SCREEN_HEIGHT))
 
         self.water_levels = []
-        for i in range(self.rect.width):
+        for i in xrange(self.rect.width):
             self.water_levels.append(0.0)
         self.t = 0
 

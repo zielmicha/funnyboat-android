@@ -36,6 +36,12 @@ import pirateboat
 import shark
 import seagull
 
+import water
+import game
+import particles
+import titanic
+import powerup
+
 def init():
     health.init()
     steamboat.init()
@@ -44,13 +50,33 @@ def init():
     cloud.init()
     mine.init()
     seagull.init()
+    
+    for module in [health, steamboat, shark, pirateboat, cloud, mine, seagull, water, game,
+                   particles, titanic, powerup]:
+        module.SCREEN_WIDTH = SCREEN_WIDTH
+        module.SCREEN_HEIGHT = SCREEN_HEIGHT
+
+def load_size():
+    surf = pygame.display.set_mode((0, 0))
+    width, height = surf.get_size()
+    scale = 300.0 / height
+    new_width = int(scale * width)
+    new_height = 300
+    if (new_width % 5) != 0:
+        new_width -= (new_width % 5)
+    print new_width, new_height
+    return new_width, new_height
 
 def main():
+    global SCREEN_WIDTH, SCREEN_HEIGHT
+    
     if android:
         android.init()
         android.map_key(android.KEYCODE_BACK, pygame.K_ESCAPE)
     pygame.init()
-
+    
+    SCREEN_WIDTH, SCREEN_HEIGHT = load_size()
+    
     noparticles = False
     usealpha = True
 
@@ -60,7 +86,7 @@ def main():
                 noparticles = True
             elif arg == "-na":
                 usealpha = False
-
+    
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     pygame.display.set_icon(util.load_image("kuvake"))

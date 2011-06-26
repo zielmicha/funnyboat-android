@@ -1,6 +1,7 @@
 This is port of "Trip on the Funny Boat" for Android. To run this download Pygame Subset from Android Market and copy this folder to /sdcard/pygame.
+You can also download it from Market: https://market.android.com/details?id=pl.org.zielinscy.funnyboat
 
-Credits (port):
+Credits:
 	Michał Zieliński: Port for Android
 	E-mail: zielmicha@gmail.com
 	
