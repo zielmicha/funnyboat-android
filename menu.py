@@ -37,6 +37,7 @@ class Menu:
         done = False
 
         while not done:
+            util.android_check_pause()
             self.screen.blit(self.sky, self.screen.get_rect())
             self.water.update()
             self.water_sprite.draw(self.screen)

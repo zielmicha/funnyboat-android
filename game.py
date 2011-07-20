@@ -104,6 +104,7 @@ class Game:
 
     def run(self):
         while not self.done:
+            util.android_check_pause()
             if not self.pause:
                 if not self.gameover:
                     self.spawn_enemies()
